@@ -1,0 +1,7 @@
+{
+  "generator-phaser": {
+    "projectName": "NecroShaker",
+    "esVersion": 6,
+    "gameFolder": "game"
+  }
+}
