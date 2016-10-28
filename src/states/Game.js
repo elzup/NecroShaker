@@ -29,7 +29,7 @@ class Game extends Phaser.State {
     this.load.image('tiles', image_path + 'tiles.png');
 
     // player
-    this.load.spritesheet('player', 'images/player.png', this.tileSize, this.tileSize);
+    this.load.spritesheet('player', 'images/player1.png', 32, 32);
 
     // sound
     this.load.audio('sfx', 'sounds/mix.mp3');
@@ -43,7 +43,8 @@ class Game extends Phaser.State {
     this.map.createLayer('tile-layer');
 
     this.player = this.add.sprite(this.tileSize, this.tileSize, 'player');
-    this.player.anchor.setTo(0.5, 0.5);
+    this.player.anchor.setTo(0, 0);
+    this.player.position.setTo(0, 0);
     this.player.animations.add('idle', [0, 0, 1, 1], 1, true);
     this.player.animations.add('jump', [2], 1, true);
     this.player.animations.add('run', [4], 1, true);
@@ -57,30 +58,30 @@ class Game extends Phaser.State {
     this.fx = this.add.audio('sfx');
     this.fx.allowMultiple = true;
     this.fx.addMarker('tic', 9, 0.1);
-    this.time.events.loop(this.loopTime, () => {this.fx.play('tic')}, this);
+    this.time.events.loop(this.loopTime, this.everyTic, this);
   }
 
   everyTic() {
     this.fx.play('tic');
-  }
-
-  update() {
     if (this.controls.up.isDown) {
       this.player.animations.play('run');
-      this.player.position.y -= 1;
+      this.player.position.y -= 32;
     }
     if (this.controls.down.isDown) {
       this.player.animations.play('run');
-      this.player.position.y += 1;
+      this.player.position.y += 32;
     }
     if (this.controls.left.isDown) {
       this.player.animations.play('run');
-      this.player.position.x -= 1;
+      this.player.position.x -= 32;
     }
     if (this.controls.right.isDown) {
       this.player.animations.play('run');
-      this.player.position.x += 1;
+      this.player.position.x += 32;
     }
+  }
+
+  update() {
   }
 }
 
