@@ -9,6 +9,8 @@ class Game extends Phaser.State {
     this.player = null;
     this.controls = null;
 
+    this.loopTime = Phaser.Timer.SECOND * 0.8;
+
     this.tileSize = 20;
   }
 
@@ -28,6 +30,9 @@ class Game extends Phaser.State {
 
     // player
     this.load.spritesheet('player', 'images/player.png', this.tileSize, this.tileSize);
+
+    // sound
+    this.load.audio('sfx', 'sounds/mix.mp3');
   }
 
   create() {
@@ -48,6 +53,15 @@ class Game extends Phaser.State {
       left: this.input.keyboard.addKey(Phaser.Keyboard.LEFT),
       right: this.input.keyboard.addKey(Phaser.Keyboard.RIGHT),
     };
+
+    this.fx = this.add.audio('sfx');
+    this.fx.allowMultiple = true;
+    this.fx.addMarker('tic', 9, 0.1);
+    this.time.events.loop(this.loopTime, () => {this.fx.play('tic')}, this);
+  }
+
+  everyTic() {
+    this.fx.play('tic');
   }
 
   update() {
