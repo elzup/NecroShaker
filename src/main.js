@@ -1,9 +1,21 @@
-require('pixi.js');
-require('p2');
-import Phaser from 'phaser';
-import Pacman from './states/pacman';
+import 'pixi'
+import 'p2'
+import Phaser from 'phaser'
 
-const game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.AUTO, 'NecroShaker-game');
-game.state.add('Game', Pacman, true);
+import GameState from './states/Game'
 
-game.state.start('boot');
+class Game extends Phaser.Game {
+
+  constructor () {
+    let width = document.documentElement.clientWidth > 768 ? 768 : document.documentElement.clientWidth;
+    let height = document.documentElement.clientHeight > 1024 ? 1024 : document.documentElement.clientHeight;
+
+    super(width, height, Phaser.AUTO, 'content', null);
+
+    this.state.add('Game', GameState, false);
+
+    this.state.start('Game');
+  }
+}
+
+window.game = new Game();
