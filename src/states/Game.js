@@ -6,6 +6,10 @@ class Game extends Phaser.State {
     super();
     this.map = null;
     this.layer = null;
+    this.player = null;
+    this.controls = null;
+
+    this.tileSize = 20;
   }
 
   init() {
@@ -21,6 +25,9 @@ class Game extends Phaser.State {
     const image_path = 'images/';
     this.load.tilemap('map', 'tile_properties.json', null, Phaser.Tilemap.TILED_JSON);
     this.load.image('tiles', image_path + 'tiles.png');
+
+    // player
+    this.load.spritesheet('player', 'images/player.png', this.tileSize, this.tileSize);
   }
 
   create() {
@@ -29,17 +36,36 @@ class Game extends Phaser.State {
     this.map = game.add.tilemap('map');
     this.map.addTilesetImage('tile-set', 'tiles');
     this.map.createLayer('tile-layer');
+
+    this.player = this.add.sprite(this.tileSize, this.tileSize, 'player');
+    this.player.anchor.setTo(0.5, 0.5);
+    this.player.animations.add('idle', [0, 0, 1, 1], 1, true);
+    this.player.animations.add('jump', [2], 1, true);
+    this.player.animations.add('run', [4], 1, true);
+    this.controls = {
+      up: this.input.keyboard.addKey(Phaser.Keyboard.UP),
+      down: this.input.keyboard.addKey(Phaser.Keyboard.DOWN),
+      left: this.input.keyboard.addKey(Phaser.Keyboard.LEFT),
+      right: this.input.keyboard.addKey(Phaser.Keyboard.RIGHT),
+    };
   }
 
-  checkKeys() {
-    if (this.cursors.left.isDown && this.current !== Phaser.LEFT) {
-      console.log('left');
-    } else if (this.cursors.right.isDown && this.current !== Phaser.RIGHT) {
-      console.log('right');
-    } else if (this.cursors.up.isDown && this.current !== Phaser.UP) {
-      console.log('up');
-    } else if (this.cursors.down.isDown && this.current !== Phaser.DOWN) {
-      console.log('down');
+  update() {
+    if (this.controls.up.isDown) {
+      this.player.animations.play('run');
+      this.player.position.y -= 1;
+    }
+    if (this.controls.down.isDown) {
+      this.player.animations.play('run');
+      this.player.position.y += 1;
+    }
+    if (this.controls.left.isDown) {
+      this.player.animations.play('run');
+      this.player.position.x -= 1;
+    }
+    if (this.controls.right.isDown) {
+      this.player.animations.play('run');
+      this.player.position.x += 1;
     }
   }
 }
