@@ -47,7 +47,9 @@ class Game extends Phaser.State {
     // this.player.loadTexture('player');
     this.player = this.add.sprite(this.tileSize, this.tileSize, 'player');
     this.player.anchor.setTo(0, 0);
-    this.player.position.setTo(0, 0);
+    this.player.position.setTo(this.tileSize, this.tileSize);
+    this.player.dx = 1;
+    this.player.dy = 1;
     this.player.animations.add('idle', [0, 0, 1, 1], 1, true);
     this.player.animations.add('jump', [2], 1, true);
     this.player.animations.add('run', [4], 1, true);
@@ -81,21 +83,33 @@ class Game extends Phaser.State {
     this.lastKey = null;
     this.player.direction = Phaser.NONE;
     if (this.controls.up.isDown) {
-      this.player.y -= this.tileSize;
-      this.player.direction = Phaser.UP;
       this.lastKey = this.controls.up;
+      this.player.direction = Phaser.UP;
+      if (this.map.layer.data[this.player.dy - 1][this.player.dx].index != 20) {
+        this.player.dy -= 1;
+        this.player.y -= this.tileSize;
+      }
     } else if (this.controls.down.isDown) {
-      this.player.y += this.tileSize;
-      this.player.direction = Phaser.DOWN;
       this.lastKey = this.controls.down;
+      this.player.direction = Phaser.DOWN;
+      if (this.map.layer.data[this.player.dy + 1][this.player.dx].index != 20) {
+        this.player.dy += 1;
+        this.player.y += this.tileSize;
+      }
     } else if (this.controls.left.isDown) {
-      this.player.x -= this.tileSize;
-      this.player.direction = Phaser.LEFT;
       this.lastKey = this.controls.left;
+      this.player.direction = Phaser.LEFT;
+      if (this.map.layer.data[this.player.dy][this.player.dx - 1].index != 20) {
+        this.player.dx -= 1;
+        this.player.x -= this.tileSize;
+      }
     } else if (this.controls.right.isDown) {
-      this.player.x += this.tileSize;
-      this.player.direction = Phaser.RIGHT;
       this.lastKey = this.controls.right;
+      this.player.direction = Phaser.RIGHT;
+      if (this.map.layer.data[this.player.dy][this.player.dx + 1].index != 20) {
+        this.player.dx += 1;
+        this.player.x += this.tileSize;
+      }
     } else {
       return;
     }

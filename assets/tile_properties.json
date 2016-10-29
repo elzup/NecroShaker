@@ -51,6 +51,9 @@
       "tileheight":32,
       "tileproperties":
       {
+        "20": {
+          "hard": true
+        },
         "135": {
           "bonus":"100"
         },
