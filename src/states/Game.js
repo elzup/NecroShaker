@@ -10,7 +10,7 @@ class Game extends Phaser.State {
     this.controls = null;
     this.lastKey = null;
 
-    this.loopTime = Phaser.Timer.SECOND * 0.6;
+    this.loopTime = Phaser.Timer.SECOND * 3 / 5;
 
     this.tileSize = 32;
   }
@@ -73,7 +73,7 @@ class Game extends Phaser.State {
   }
 
   everyTic() {
-    this.fx.play('tic');
+    // this.fx.play('tic');
     this.player.movable = true;
   }
 
