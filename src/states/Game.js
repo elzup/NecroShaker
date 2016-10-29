@@ -1,4 +1,7 @@
 import Phaser from 'phaser';
+import io from 'socket.io';
+const socketServerUrl = window.location.hostname + ':8080';
+const socket = io.connect(socketServerUrl);
 
 class Game extends Phaser.State {
 

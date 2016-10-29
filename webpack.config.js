@@ -14,17 +14,15 @@ var definePlugin = new webpack.DefinePlugin({
 
 module.exports = {
   entry: {
-    app: [
-      'babel-polyfill',
-      path.resolve(__dirname, 'src/main.js')
-    ]
+    main: [ 'babel-polyfill', path.resolve(__dirname, 'src/main.js') ],
+    controller: [ 'babel-polyfill', path.resolve(__dirname, 'src/controller.js') ]
   },
   devtool: 'source-map',
   output: {
     pathinfo: true,
     path: path.resolve(__dirname, 'dist'),
     publicPath: './dist/',
-    filename: 'bundle.js'
+    filename: '[name].bundle.js'
   },
   watch: true,
   plugins: [
